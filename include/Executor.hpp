@@ -25,6 +25,6 @@ namespace adas
     public:
         // 查询当前汽车状态，纯虚函数
         virtual Pose Query(void) const noexcept = 0;
-        // 执行一个用字符串表示的指令序列，如MLMRM，纯虚函数
+        virtual void Execute(const std::string &commands) noexcept = 0;
     };
 }
