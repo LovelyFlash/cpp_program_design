@@ -30,5 +30,9 @@ namespace adas
     private:
         // 私有数据成员，汽车当前姿态
         Pose pose;
+        bool fast_mode;
+        void Move(void) noexcept;
+        void TurnLeft(void) noexcept;
+        void TurnRight(void) noexcept;
     };
 }
