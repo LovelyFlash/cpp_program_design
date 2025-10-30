@@ -5,30 +5,18 @@
 
 namespace adas
 {
-    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept : pose(pose), fast_mode(false) {}
+    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept : poseHandler(pose) {};
 
-    Pose ExecutorImpl::Query(void) const noexcept
+    Pose ExecutorImpl::Query() const noexcept
     {
-        return pose;
-    }
-
-    void ExecutorImpl::Fast()
-    {
-        fast_mode = !fast_mode;
-    }
-
-    bool ExecutorImpl::IsFast()
-    {
-        if (fast_mode)
-            return true;
-        return false;
+        return poseHandler.Query();
     }
 
     void ExecutorImpl::Execute(const std::string &commands) noexcept
     {
         for (const auto cmd : commands)
         {
-            std::unique_ptr<ICommand> cmder;
+            std::unique_ptr<ICommand> cmder = nullptr;
             if (cmd == 'M')
                 cmder = std::make_unique<MoveCommand>();
             else if (cmd == 'L')
@@ -38,91 +26,7 @@ namespace adas
             else if (cmd == 'F')
                 cmder = std::make_unique<FastCommand>();
             if (cmder)
-                cmder->DoOperate(*this);
-        }
-    }
-
-    void ExecutorImpl::Move() noexcept
-    {
-        if (pose.heading == 'W')
-        {
-            if (fast_mode)
-                --pose.x;
-            --pose.x;
-        }
-        else if (pose.heading == 'E')
-        {
-            if (fast_mode)
-                ++pose.x;
-            ++pose.x;
-        }
-        else if (pose.heading == 'N')
-        {
-            if (fast_mode)
-                ++pose.y;
-            ++pose.y;
-        }
-        else if (pose.heading == 'S')
-        {
-            if (fast_mode)
-                --pose.y;
-            --pose.y;
-        }
-    }
-
-    void ExecutorImpl::TurnLeft() noexcept
-    {
-        if (pose.heading == 'W')
-        {
-            if (fast_mode)
-                --pose.x;
-            pose.heading = 'S';
-        }
-        else if (pose.heading == 'S')
-        {
-            if (fast_mode)
-                --pose.y;
-            pose.heading = 'E';
-        }
-        else if (pose.heading == 'E')
-        {
-            if (fast_mode)
-                ++pose.x;
-            pose.heading = 'N';
-        }
-        else if (pose.heading == 'N')
-        {
-            if (fast_mode)
-                ++pose.y;
-            pose.heading = 'W';
-        }
-    }
-
-    void ExecutorImpl::TurnRight() noexcept
-    {
-        if (pose.heading == 'W')
-        {
-            if (fast_mode)
-                --pose.x;
-            pose.heading = 'N';
-        }
-        else if (pose.heading == 'S')
-        {
-            if (fast_mode)
-                --pose.y;
-            pose.heading = 'W';
-        }
-        else if (pose.heading == 'E')
-        {
-            if (fast_mode)
-                ++pose.x;
-            pose.heading = 'S';
-        }
-        else if (pose.heading == 'N')
-        {
-            if (fast_mode)
-                ++pose.y;
-            pose.heading = 'E';
+                cmder->DoOperate(poseHandler);
         }
     }
 
