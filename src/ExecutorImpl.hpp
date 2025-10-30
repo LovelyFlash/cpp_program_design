@@ -26,40 +26,60 @@ namespace adas
         // 询当前汽车姿态，是父类抽象方法Query的具体实现、
         Pose Query(void) const noexcept override;
         void Execute(const std::string &commands) noexcept override;
-
+        
+        // 手动切换fast模式
+        void Fast();
+        
+        //查询是否处于fast状态
+        bool IsFast();
     private:
         // 私有数据成员，汽车当前姿态
         Pose pose;
-        bool fast_mode;
+        bool fast_mode{false};
         void Move(void) noexcept;
         void TurnLeft(void) noexcept;
         void TurnRight(void) noexcept;
 
-        class MoveCommand final // 定义 一个 嵌套 类 MoveCommand，完成 Move动作（ M指令）
+        class ICommand
         {
         public:
-            // 执行 Move动作，需要 委托 ExecutorImp&执行 器 来完成动作
-            void DoOperate(ExecutorImpl &executor) const noexcept
+            virtual ~ICommand() {};
+            virtual void DoOperate(ExecutorImpl &executor) const noexcept = 0;
+        };
+
+        class MoveCommand final : public ICommand // 定义一个嵌套类MoveCommand，完成 Move动作(M指令)
+        {
+        public:
+            // 执行Move动作，需要委托ExecutorImp&执行器来完成动作
+            void DoOperate(ExecutorImpl &executor) const noexcept override
             {
                 executor.Move();
             }
         };
-
-        class TurnLeftCommand final
+        class TurnLeftCommand final : public ICommand
         {
         public:
-            void DoOperate(ExecutorImpl &executor) const noexcept
+            void DoOperate(ExecutorImpl &executor) const noexcept override
             {
                 executor.TurnLeft();
             }
         };
 
-        class TurnRightCommand final 
+        class TurnRightCommand final : public ICommand
         {
         public:
-            void DoOperate(ExecutorImpl &executor) const noexcept
+            void DoOperate(ExecutorImpl &executor) const noexcept override
             {
                 executor.TurnRight();
+            }
+        };
+
+        class FastCommand final : public ICommand
+        {
+        public:
+            void DoOperate(ExecutorImpl &executor) const noexcept override
+            {
+                executor.Fast();
             }
         };
     };

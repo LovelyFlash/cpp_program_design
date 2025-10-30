@@ -12,65 +12,118 @@ namespace adas
         return pose;
     }
 
+    void ExecutorImpl::Fast()
+    {
+        fast_mode = !fast_mode;
+    }
+
+    bool ExecutorImpl::IsFast()
+    {
+        if (fast_mode)
+            return true;
+        return false;
+    }
+
     void ExecutorImpl::Execute(const std::string &commands) noexcept
     {
         for (const auto cmd : commands)
         {
+            std::unique_ptr<ICommand> cmder;
             if (cmd == 'M')
-            {
-                std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
-                //*this就是 ExecutorImpl实例对象，作为实参 传递给 DoOperate方法
-                cmder->DoOperate(*this); // 执行 MoveCommand的 DoOperate，即 Move
-            }
+                cmder = std::make_unique<MoveCommand>();
             else if (cmd == 'L')
-            {
-                std::unique_ptr<TurnLeftCommand> cmder = std::make_unique<TurnLeftCommand>();
-                cmder->DoOperate(*this);
-            }
+                cmder = std::make_unique<TurnLeftCommand>();
             else if (cmd == 'R')
-            {
-                std::unique_ptr<TurnRightCommand> cmder = std::make_unique<TurnRightCommand>();
-                cmder->DoOperate(*this);
-            }
+                cmder = std::make_unique<TurnRightCommand>();
             else if (cmd == 'F')
-                fast_mode = true;
+                cmder = std::make_unique<FastCommand>();
+            if (cmder)
+                cmder->DoOperate(*this);
         }
     }
 
     void ExecutorImpl::Move() noexcept
     {
         if (pose.heading == 'W')
+        {
+            if (fast_mode)
+                --pose.x;
             --pose.x;
+        }
         else if (pose.heading == 'E')
+        {
+            if (fast_mode)
+                ++pose.x;
             ++pose.x;
+        }
         else if (pose.heading == 'N')
+        {
+            if (fast_mode)
+                ++pose.y;
             ++pose.y;
+        }
         else if (pose.heading == 'S')
+        {
+            if (fast_mode)
+                --pose.y;
             --pose.y;
+        }
     }
 
     void ExecutorImpl::TurnLeft() noexcept
     {
         if (pose.heading == 'W')
+        {
+            if (fast_mode)
+                --pose.x;
             pose.heading = 'S';
+        }
         else if (pose.heading == 'S')
+        {
+            if (fast_mode)
+                --pose.y;
             pose.heading = 'E';
+        }
         else if (pose.heading == 'E')
+        {
+            if (fast_mode)
+                ++pose.x;
             pose.heading = 'N';
+        }
         else if (pose.heading == 'N')
+        {
+            if (fast_mode)
+                ++pose.y;
             pose.heading = 'W';
+        }
     }
 
     void ExecutorImpl::TurnRight() noexcept
     {
         if (pose.heading == 'W')
+        {
+            if (fast_mode)
+                --pose.x;
             pose.heading = 'N';
+        }
         else if (pose.heading == 'S')
+        {
+            if (fast_mode)
+                --pose.y;
             pose.heading = 'W';
+        }
         else if (pose.heading == 'E')
+        {
+            if (fast_mode)
+                ++pose.x;
             pose.heading = 'S';
+        }
         else if (pose.heading == 'N')
+        {
+            if (fast_mode)
+                ++pose.y;
             pose.heading = 'E';
+        }
     }
 
     /*
