@@ -15,10 +15,8 @@ namespace adas
     public:
         // 构造函数
         explicit ExecutorImpl(const Pose &pose) noexcept;
-
         // 默认析构函数
         ~ExecutorImpl() noexcept = default;
-
         // 不能拷贝
         ExecutorImpl(const ExecutorImpl &) = delete;
         // 不能赋值
