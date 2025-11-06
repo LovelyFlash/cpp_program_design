@@ -75,8 +75,8 @@ namespace adas
      */
     class MoveCommand final
     {
-        // 定义函数对象operate，接收参数PoseHandler，返回void
-        const std::function<void(PoseHandler &PoseHandler)> operate = [](PoseHandler &poseHandler) noexcept
+    public:
+        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
         {
             if (poseHandler.IsFast())
                 poseHandler.Move();
@@ -86,7 +86,8 @@ namespace adas
 
     class TurnLeftCommand final
     {
-        const std::function<void(PoseHandler &PoseHandler)> operate = [](PoseHandler &poseHandler) noexcept
+    public:
+        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
         {
             if (poseHandler.IsFast())
                 poseHandler.Move();
@@ -96,8 +97,8 @@ namespace adas
 
     class TurnRightCommand final
     {
-        const std::function<void(PoseHandler &PoseHandler)>
-            operate = [](PoseHandler &poseHandler) noexcept
+    public:
+        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
         {
             if (poseHandler.IsFast())
                 poseHandler.Move();
@@ -107,7 +108,8 @@ namespace adas
 
     class FastCommand final
     {
-        const std::function<void(PoseHandler &PoseHandler)> operate = [](PoseHandler &poseHandler) noexcept
+    public:
+        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
         {
             poseHandler.Fast();
         };
@@ -115,8 +117,8 @@ namespace adas
 
     class ReverseCommand final
     {
-        const std::function<void(PoseHandler &PoseHandler)>
-            operate = [](PoseHandler &poseHandler) noexcept
+    public:
+        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
         {
             if (poseHandler.IsFast())
                 poseHandler.Move();
@@ -127,4 +129,57 @@ namespace adas
     /***
      * 以下用操作符重载对各类操作进行定义
      */
+
+    // class MoveCommand final
+    // {
+    // public:
+    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     {
+    //         if (poseHandler.IsFast())
+    //             poseHandler.Move();
+    //         poseHandler.Move();
+    //     }
+    // };
+
+    // class TurnLeftCommand final
+    // {
+    // public:
+    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     {
+    //         if (poseHandler.IsFast())
+    //             poseHandler.Move();
+    //         poseHandler.TurnLeft();
+    //     }
+    // };
+
+    // class TurnRightCommand final
+    // {
+    // public:
+    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     {
+    //         if (poseHandler.IsFast())
+    //             poseHandler.Move();
+    //         poseHandler.TurnRight();
+    //     }
+    // };
+
+    // class FastCommand final
+    // {
+    // public:
+    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     {
+    //         poseHandler.Fast();
+    //     }
+    // };
+
+    // class ReverseCommand final
+    // {
+    // public:
+    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     {
+    //         if (poseHandler.IsFast())
+    //             poseHandler.Move();
+    //         poseHandler.Reverse();
+    //     }
+    // };
 }
