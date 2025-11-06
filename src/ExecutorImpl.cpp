@@ -15,14 +15,14 @@ namespace adas
 
     void ExecutorImpl::Execute(const std::string &commands) noexcept
     {
-        std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap;
-        // {
-        //     {'M', MoveCommand()},
-        //     {'L', TurnLeftCommand()},
-        //     {'R', TurnRightCommand()},
-        //     {'F', FastCommand()},
-        //     {'B', ReverseCommand()},
-        // };
+        std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap
+        {
+            {'M', MoveCommand()},
+            {'L', TurnLeftCommand()},
+            {'R', TurnRightCommand()},
+            {'F', FastCommand()},
+            {'B', ReverseCommand()},
+        };
 
         // cmderMap.emplace('M', std::make_unique<MoveCommand>());
         // cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
@@ -30,16 +30,16 @@ namespace adas
         // cmderMap.emplace('F', std::make_unique<FastCommand>());
         // cmderMap.emplace('B', std::make_unique<ReverseCommand>());
 
-        MoveCommand MoveCommand;
-        TurnLeftCommand TurnLeftCommand;
-        TurnRightCommand TurnRightCommand;
-        FastCommand FastCommand;
-        ReverseCommand ReverseCommand;
-        cmderMap.emplace('M', MoveCommand.operate);
-        cmderMap.emplace('L', TurnLeftCommand.operate);
-        cmderMap.emplace('R', TurnRightCommand.operate);
-        cmderMap.emplace('F', FastCommand.operate);
-        cmderMap.emplace('B', ReverseCommand.operate);
+        // MoveCommand MoveCommand;
+        // TurnLeftCommand TurnLeftCommand;
+        // TurnRightCommand TurnRightCommand;
+        // FastCommand FastCommand;
+        // ReverseCommand ReverseCommand;
+        // cmderMap.emplace('M', MoveCommand.operate);
+        // cmderMap.emplace('L', TurnLeftCommand.operate);
+        // cmderMap.emplace('R', TurnRightCommand.operate);
+        // cmderMap.emplace('F', FastCommand.operate);
+        // cmderMap.emplace('B', ReverseCommand.operate);
 
         for (const auto cmd : commands)
         {

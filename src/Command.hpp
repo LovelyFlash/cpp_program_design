@@ -73,113 +73,113 @@ namespace adas
     /***
      * 以下使用匿名函数和functional库对函数进行定义
      */
-    class MoveCommand final
-    {
-    public:
-        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
-        {
-            if (poseHandler.IsFast())
-                poseHandler.Move();
-            poseHandler.Move();
-        };
-    };
-
-    class TurnLeftCommand final
-    {
-    public:
-        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
-        {
-            if (poseHandler.IsFast())
-                poseHandler.Move();
-            poseHandler.TurnLeft();
-        };
-    };
-
-    class TurnRightCommand final
-    {
-    public:
-        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
-        {
-            if (poseHandler.IsFast())
-                poseHandler.Move();
-            poseHandler.TurnRight();
-        };
-    };
-
-    class FastCommand final
-    {
-    public:
-        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
-        {
-            poseHandler.Fast();
-        };
-    };
-
-    class ReverseCommand final
-    {
-    public:
-        const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
-        {
-            if (poseHandler.IsFast())
-                poseHandler.Move();
-            poseHandler.Reverse();
-        };
-    };
-
-    /***
-     * 以下用操作符重载对各类操作进行定义
-     */
-
     // class MoveCommand final
     // {
     // public:
-    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
     //     {
     //         if (poseHandler.IsFast())
     //             poseHandler.Move();
     //         poseHandler.Move();
-    //     }
+    //     };
     // };
 
     // class TurnLeftCommand final
     // {
     // public:
-    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
     //     {
     //         if (poseHandler.IsFast())
     //             poseHandler.Move();
     //         poseHandler.TurnLeft();
-    //     }
+    //     };
     // };
 
     // class TurnRightCommand final
     // {
     // public:
-    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
     //     {
     //         if (poseHandler.IsFast())
     //             poseHandler.Move();
     //         poseHandler.TurnRight();
-    //     }
+    //     };
     // };
 
     // class FastCommand final
     // {
     // public:
-    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
     //     {
     //         poseHandler.Fast();
-    //     }
+    //     };
     // };
 
     // class ReverseCommand final
     // {
     // public:
-    //     void operator()(PoseHandler &poseHandler) const noexcept
+    //     const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
     //     {
     //         if (poseHandler.IsFast())
     //             poseHandler.Move();
     //         poseHandler.Reverse();
-    //     }
+    //     };
     // };
+
+    /***
+     * 以下用操作符重载对各类操作进行定义
+     */
+
+    class MoveCommand final
+    {
+    public:
+        void operator()(PoseHandler &poseHandler) const noexcept
+        {
+            if (poseHandler.IsFast())
+                poseHandler.Move();
+            poseHandler.Move();
+        }
+    };
+
+    class TurnLeftCommand final
+    {
+    public:
+        void operator()(PoseHandler &poseHandler) const noexcept
+        {
+            if (poseHandler.IsFast())
+                poseHandler.Move();
+            poseHandler.TurnLeft();
+        }
+    };
+
+    class TurnRightCommand final
+    {
+    public:
+        void operator()(PoseHandler &poseHandler) const noexcept
+        {
+            if (poseHandler.IsFast())
+                poseHandler.Move();
+            poseHandler.TurnRight();
+        }
+    };
+
+    class FastCommand final
+    {
+    public:
+        void operator()(PoseHandler &poseHandler) const noexcept
+        {
+            poseHandler.Fast();
+        }
+    };
+
+    class ReverseCommand final
+    {
+    public:
+        void operator()(PoseHandler &poseHandler) const noexcept
+        {
+            if (poseHandler.IsFast())
+                poseHandler.Move();
+            poseHandler.Reverse();
+        }
+    };
 }
