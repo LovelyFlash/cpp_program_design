@@ -6,23 +6,22 @@ namespace adas
 
     void PoseHandler::Move() noexcept
     {
-        if (fast_mode)
-            point += facing->Move();
         point += facing->Move();
     }
 
     void PoseHandler::TurnLeft() noexcept
     {
-        if (fast_mode)
-            point += facing->Move();
         facing = &(facing->LeftOne());
     }
 
     void PoseHandler::TurnRight() noexcept
     {
-        if (fast_mode)
-            point += facing->Move();
         facing = &(facing->RightOne());
+    }
+
+    void PoseHandler::Reverse(void) noexcept
+    {
+        facing = &(facing->BackOne());
     }
 
     void PoseHandler::Fast() noexcept

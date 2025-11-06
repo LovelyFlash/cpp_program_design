@@ -15,7 +15,7 @@ namespace adas
 
     void ExecutorImpl::Execute(const std::string &commands) noexcept
     {
-        std::unordered_map<char, std::unique_ptr<ICommand>> cmderMap;
+        std::unordered_map<char, std::function<void(PoseHandler & PoseHandler)>> cmderMap;
 
         cmderMap.emplace('M', std::make_unique<MoveCommand>());
         cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
@@ -28,7 +28,7 @@ namespace adas
             const auto cmder = cmderMap.find(cmd);
 
             if (cmder != cmderMap.end())
-                cmder->second->DoOperate(poseHandler);
+                cmder->second(poseHandler);
         }
     }
 

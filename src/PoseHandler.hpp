@@ -16,6 +16,7 @@ namespace adas
         void Move(void) noexcept;
         void TurnLeft(void) noexcept;
         void TurnRight(void) noexcept;
+        void Reverse(void) noexcept;
         void Fast(void) noexcept;
         bool IsFast(void) const noexcept;
         Pose Query(void) const noexcept;

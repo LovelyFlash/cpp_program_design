@@ -19,7 +19,7 @@ namespace adas
         const Point &Move(void) const noexcept;
         const Direction &LeftOne(void) const noexcept;
         const Direction &RightOne(void) const noexcept;
-
+        const Direction &BackOne(void) const noexcept;
         const char GetHeading(void) const noexcept;
 
     private:

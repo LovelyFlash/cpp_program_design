@@ -34,9 +34,15 @@ namespace adas
     {
         return directions[(index + 3) % 4];
     }
+
     const Direction &Direction::RightOne(void) const noexcept
     {
         return directions[(index + 1) % 4];
+    }
+
+    const Direction &Direction::BackOne(void) const noexcept
+    {
+        return directions[(index + 2) % 4];
     }
 
     const char Direction::GetHeading(void) const noexcept
