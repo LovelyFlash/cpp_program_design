@@ -64,8 +64,6 @@ namespace adas
     //     public:
     //         void DoOperate(PoseHandler &poseHandler) const noexcept override
     //         {
-    //             if (poseHandler.IsFast())
-    //                 poseHandler.Move();
     //             poseHandler.Reverse();
     //         }
     // };
@@ -120,8 +118,6 @@ namespace adas
     // public:
     //     const std::function<void(PoseHandler &poseHandler)> operate = [](PoseHandler &poseHandler) noexcept
     //     {
-    //         if (poseHandler.IsFast())
-    //             poseHandler.Move();
     //         poseHandler.Reverse();
     //     };
     // };
@@ -177,8 +173,6 @@ namespace adas
     public:
         void operator()(PoseHandler &poseHandler) const noexcept
         {
-            if (poseHandler.IsFast())
-                poseHandler.Move();
             poseHandler.Reverse();
         }
     };
