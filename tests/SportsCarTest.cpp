@@ -104,7 +104,7 @@ namespace adas
         // when
         executor->Execute("BR");
         // then
-        const Pose target{0, -11, 'N'};
+        const Pose target{0, -1, 'N'};
         ASSERT_EQ(target, executor->Query());
     }
     // 测试输入：FR
