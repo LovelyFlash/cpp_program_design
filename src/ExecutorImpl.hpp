@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Executor.hpp"
-#include "PoseHandler.hpp"
+#include "cmder/Command.hpp"
+
+#include <memory>
 #include <string>
 
 namespace adas
@@ -13,7 +14,7 @@ namespace adas
     {
     public:
         // 构造函数
-        explicit ExecutorImpl(const Pose &pose) noexcept;
+        explicit ExecutorImpl(const Pose &pose, CmderOrchestrator *orchestrator) noexcept;
         // 默认析构函数
         ~ExecutorImpl() noexcept = default;
         // 不能拷贝
@@ -29,5 +30,6 @@ namespace adas
     private:
         // 私有数据成员，汽车当前姿态
         PoseHandler poseHandler;
+        std::unique_ptr<CmderOrchestrator> orchestrator;
     };
 }

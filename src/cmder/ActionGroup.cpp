@@ -38,7 +38,6 @@ namespace adas
     public:
         void operator()(PoseHandler &poseHandler) const noexcept
         {
-            poseHandler.Reverse();
             poseHandler.TurnRight();
         }
     };
@@ -72,6 +71,13 @@ namespace adas
 
     ActionGroup::ActionGroup(const std::list<ActionType> &actions) noexcept : actions(actions) {}
 
+    ActionGroup &ActionGroup::operator+=(const ActionGroup &rhs) noexcept
+    {
+        for (ActionType act : rhs.actions)
+            actions.push_back(act);
+        return *this;
+    }
+
     void ActionGroup::PushAction(const ActionType ActionType) noexcept
     {
         actions.push_back(ActionType);
@@ -89,8 +95,8 @@ namespace adas
             BeFastAction(),
         };
 
-        std::for_each(actions.begin(), actions.end(),[&poseHandler](const ActionType actionType) mutable noexcept
-                                       { actionVec[static_cast<__UINT16_TYPE__>(actionType)](poseHandler); });
+        std::for_each(actions.begin(), actions.end(), [&poseHandler](const ActionType actionType) mutable noexcept
+                      { actionVec[static_cast<__UINT16_TYPE__>(actionType)](poseHandler); });
     }
 
 }

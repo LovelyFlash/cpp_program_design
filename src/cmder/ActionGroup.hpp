@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "PoseHandler.hpp"
+#include "core/PoseHandler.hpp"
 
 namespace adas
 {
@@ -23,6 +23,7 @@ namespace adas
         ActionGroup(void) = default;
         explicit ActionGroup(const std::list<ActionType> &actions) noexcept;
         ~ActionGroup() = default;
+        ActionGroup &operator+=(const ActionGroup &rhs) noexcept;
 
     public:
         void PushAction(const ActionType ActionType) noexcept;
