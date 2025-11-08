@@ -1,8 +1,12 @@
 #include "ExecutorImpl.hpp"
+// #include "Command.hpp"
+#include "CmderFactory.hpp"
+#include "Singleton.hpp"
 
-#include <new>
-#include <memory>
-#include <unordered_map>
+#include <algorithm>
+// #include <new>
+// #include <memory>
+// #include <unordered_map>
 
 namespace adas
 {
@@ -15,14 +19,16 @@ namespace adas
 
     void ExecutorImpl::Execute(const std::string &commands) noexcept
     {
-        std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap
-        {
-            {'M', MoveCommand()},
-            {'L', TurnLeftCommand()},
-            {'R', TurnRightCommand()},
-            {'F', FastCommand()},
-            {'B', ReverseCommand()},
-        };
+        /***
+         * 不使用指令工厂
+         */
+        // std::unordered_map<char, std::function<void(PoseHandler & poseHandler)>> cmderMap{
+        //     {'M', MoveCommand()},
+        //     {'L', TurnLeftCommand()},
+        //     {'R', TurnRightCommand()},
+        //     {'F', FastCommand()},
+        //     {'B', ReverseCommand()},
+        // };
 
         // cmderMap.emplace('M', std::make_unique<MoveCommand>());
         // cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
@@ -41,13 +47,27 @@ namespace adas
         // cmderMap.emplace('F', FastCommand.operate);
         // cmderMap.emplace('B', ReverseCommand.operate);
 
-        for (const auto cmd : commands)
-        {
-            const auto cmder = cmderMap.find(cmd);
+        // for (const auto cmd : commands)
+        // {
+        //     const auto cmder = cmderMap.find(cmd);
 
-            if (cmder != cmderMap.end())
-                cmder->second(poseHandler);
-        }
+        //     if (cmder != cmderMap.end())
+        //         cmder->second(poseHandler);
+        // }
+
+        /***
+         * 使用指令工厂
+         */
+
+        const auto cmders = Singleton<CmderFactory>::Inatance().GetCmders(commands);
+
+        std::for_each(
+            cmders.begin(),
+            cmders.end(),
+            [this](const std::function<void(PoseHandler & poseHandler)> &cmder) noexcept
+            {
+                cmder(poseHandler);
+            });
     }
 
     /*
