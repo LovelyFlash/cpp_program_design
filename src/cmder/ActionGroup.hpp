@@ -8,7 +8,7 @@ namespace adas
 {
     enum class ActionType : __UINT16_TYPE__
     {
-        Move_1_STEP_ACTION = 0,
+        MOVE_1_STEP_ACTION = 0,
         TURNLEFT_ACTION,
         REVERSE_TURNLEFT_ACTION,
         TURNRIGHT_ACTION,

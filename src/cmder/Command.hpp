@@ -18,8 +18,8 @@ namespace adas
             // 创建actionGroup对象
             ActionGroup actionGroup;
             if (poseHandler.IsFast())
-                actionGroup.PushAction(ActionType::Move_1_STEP_ACTION);
-            actionGroup.PushAction(ActionType::Move_1_STEP_ACTION);
+                actionGroup.PushAction(ActionType::MOVE_1_STEP_ACTION);
+            actionGroup.PushAction(ActionType::MOVE_1_STEP_ACTION);
 
             return actionGroup;
         }
@@ -32,7 +32,7 @@ namespace adas
         {
             ActionGroup actionGroup;
             if (poseHandler.IsFast())
-                actionGroup.PushAction(ActionType::Move_1_STEP_ACTION);
+                actionGroup.PushAction(ActionType::MOVE_1_STEP_ACTION);
             if (poseHandler.IsReverse())
                 actionGroup.PushAction(ActionType::REVERSE_TURNLEFT_ACTION);
             else
@@ -49,7 +49,7 @@ namespace adas
         {
             ActionGroup actionGroup;
             if (poseHandler.IsFast())
-                actionGroup.PushAction(ActionType::Move_1_STEP_ACTION);
+                actionGroup.PushAction(ActionType::MOVE_1_STEP_ACTION);
             if (poseHandler.IsReverse())
                 actionGroup.PushAction(ActionType::REVERSE_TURNRIGHT_ACTION);
             else
@@ -78,6 +78,26 @@ namespace adas
             ActionGroup actionGroup;
             actionGroup.PushAction(ActionType::BE_REVERSE_ACTION);
             return actionGroup;
+        }
+    };
+
+    class TurnRoundCommand final
+    {
+    public:
+        ActionGroup operator()(PoseHandler &poseHandler) const noexcept
+        {
+            if (poseHandler.IsReverse())
+                return ActionGroup();
+            else
+            {
+                ActionGroup actionGroup;
+                if (poseHandler.IsFast())
+                    actionGroup.PushAction(ActionType::MOVE_1_STEP_ACTION);
+                actionGroup.PushAction(ActionType::TURNLEFT_ACTION);
+                actionGroup.PushAction(ActionType::MOVE_1_STEP_ACTION);
+                actionGroup.PushAction(ActionType::TURNLEFT_ACTION);
+                return actionGroup;
+            }
         }
     };
 
