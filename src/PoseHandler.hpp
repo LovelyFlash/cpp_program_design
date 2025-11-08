@@ -17,6 +17,7 @@ namespace adas
         void TurnLeft(void) noexcept;
         void TurnRight(void) noexcept;
         void Reverse(void) noexcept;
+        bool IsReverse(void) const noexcept;
         void Fast(void) noexcept;
         bool IsFast(void) const noexcept;
         Pose Query(void) const noexcept;
@@ -25,5 +26,6 @@ namespace adas
         Point point;
         const Direction *facing;
         bool fast_mode{false};
+        bool reverse_mode{false};
     };
 }

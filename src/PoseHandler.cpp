@@ -6,7 +6,10 @@ namespace adas
 
     void PoseHandler::Move() noexcept
     {
-        point += facing->Move();
+        if (reverse_mode)
+            point -= facing->Move();
+        else
+            point += facing->Move();
     }
 
     void PoseHandler::TurnLeft() noexcept
@@ -21,7 +24,14 @@ namespace adas
 
     void PoseHandler::Reverse(void) noexcept
     {
-        facing = &(facing->BackOne());
+        reverse_mode = !reverse_mode;
+    }
+
+    bool PoseHandler::IsReverse() const noexcept
+    {
+        if (reverse_mode)
+            return true;
+        return false;
     }
 
     void PoseHandler::Fast() noexcept
